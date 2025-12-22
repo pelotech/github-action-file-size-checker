@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-set -euo pipefail
+set -eu
 
 # Get inputs (with defaults for local testing)
 MAX_SIZE_KB="${INPUT_MAX_FILE_SIZE_KB:-20}"
