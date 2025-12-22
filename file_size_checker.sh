@@ -11,6 +11,8 @@ HEAD_SHA="${INPUT_HEAD_SHA:-}"
 #INCLUDE_PATTERNS="${INPUT_INCLUDE_PATTERNS:-}"
 #CHECK_ALL_COMMITS="${INPUT_CHECK_ALL_COMMITS:-}"
 
+env | grep "INPUT_"
+
 git fetch origin "$BASE_SHA"
 git fetch origin "$HEAD_SHA"
 
