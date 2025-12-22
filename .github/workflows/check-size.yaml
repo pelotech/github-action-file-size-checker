@@ -22,4 +22,6 @@ jobs:
         uses: ./
         with:
           max_file_size_kb: '20'
+          base_sha: '${{ github.event.pull_request.base.sha }}'
+          head_sha: '${{ github.event.pull_request.head.sha }}'
 
