@@ -2,27 +2,39 @@
 set -eu
 
 # Get inputs (with defaults for local testing)
-MAX_SIZE_KB="${INPUT_MAX_FILE_SIZE_KB:-20}"
-BASE_SHA="${INPUT_BASE_SHA:-}"
-HEAD_SHA="${INPUT_HEAD_SHA:-}"
+MAX_FILE_SIZE_KB="${MAX_FILE_SIZE_KB:-20}"
+BASE_SHA="${BASE_SHA:-}"
+HEAD_SHA="${HEAD_SHA:-}"
+#FAIL_ON_LARGE_FILES="${FAIL_ON_LARGE_FILES:-false}"
+#EXCLUDE_PATTERNS="${EXCLUDE_PATTERNS:-}"
+#INCLUDE_PATTERNS="${INCLUDE_PATTERNS:-}"
+#CHECK_ALL_COMMITS="${CHECK_ALL_COMMITS:-}"
 
-#FAIL_ON_LARGE_FILES="${INPUT_FAIL_ON_LARGE_FILES:-false}"
-#EXCLUDE_PATTERNS="${INPUT_EXCLUDE_PATTERNS:-}"
-#INCLUDE_PATTERNS="${INPUT_INCLUDE_PATTERNS:-}"
-#CHECK_ALL_COMMITS="${INPUT_CHECK_ALL_COMMITS:-}"
+# Fall back to local commits when inputs are omitted.
+if [ -z "$HEAD_SHA" ]; then
+  HEAD_SHA=$(git rev-parse HEAD 2>/dev/null || true)
+  if [ -z "$HEAD_SHA" ]; then
+    echo "::error::Unable to determine HEAD SHA from the current repository state."
+    exit 1
+  fi
+fi
 
-env | grep "INPUT_"
+if [ -z "$BASE_SHA" ]; then
+  BASE_SHA=$(git rev-parse HEAD~1 2>/dev/null || true)
+  if [ -z "$BASE_SHA" ]; then
+    BASE_SHA="$HEAD_SHA"
+    echo "::notice::Single-commit repository detected; using HEAD as both base and head for size checks."
+  fi
+fi
 
-git fetch origin "$BASE_SHA"
-git fetch origin "$HEAD_SHA"
 
-if ! [ "$MAX_SIZE_KB" -gt 0 ] 2>/dev/null; then
-  echo "::error::Invalid max-file-size-kb value: '$MAX_SIZE_KB'. Must be a positive number."
+if ! [ "$MAX_FILE_SIZE_KB" -gt 0 ] 2>/dev/null; then
+  echo "::error::Invalid max-file-size-kb value: '$MAX_FILE_SIZE_KB'. Must be a positive number."
   exit 1
 fi
 
-MAX_SIZE_BYTES=$((MAX_SIZE_KB * 1024))
-MAX_SIZE_HUMAN="${MAX_SIZE_KB}KB"
+MAX_SIZE_BYTES=$((MAX_FILE_SIZE_KB * 1024))
+MAX_SIZE_HUMAN="${MAX_FILE_SIZE_KB}KB"
 
 # Export the readable label for the GH comment
 echo "max_size_human=${MAX_SIZE_HUMAN}" >> "$GITHUB_OUTPUT"

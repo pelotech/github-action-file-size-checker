@@ -17,8 +17,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v6
 
-      - name: Check for files over 20KB
+      - name: Check for files over 25KB
         id: file-check
         uses: ./
         with:
-          max_file_size_kb: '20'
+          max_file_size_kb: '25'

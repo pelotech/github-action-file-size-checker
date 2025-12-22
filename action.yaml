@@ -40,7 +40,12 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - shell: sh
+    - id: size_check
+      shell: sh
+      env:
+        MAX_FILE_SIZE_KB: ${{ inputs.max_file_size_kb }}
+        BASE_SHA: ${{ inputs.base_sha }}
+        HEAD_SHA: ${{ inputs.head_sha }}
       run: ./file_size_checker.sh
     - shell: sh
       run: |
