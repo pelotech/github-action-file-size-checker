@@ -27,7 +27,6 @@ if [ -z "$BASE_SHA" ]; then
   fi
 fi
 
-
 if ! [ "$MAX_FILE_SIZE_KB" -gt 0 ] 2>/dev/null; then
   echo "::error::Invalid max-file-size-kb value: '$MAX_FILE_SIZE_KB'. Must be a positive number."
   exit 1
@@ -39,8 +38,26 @@ MAX_SIZE_HUMAN="${MAX_FILE_SIZE_KB}KB"
 # Export the readable label for the GH comment
 echo "max_size_human=${MAX_SIZE_HUMAN}" >> "$GITHUB_OUTPUT"
 
-# 2. Get the list of newly added files
+# Get the list of newly added files
 echo "Finding newly added files in range: $BASE_SHA..$HEAD_SHA"
+
+# Ensure that a given commit object exists (has been fetched), and fetch if needed e.g. from a shallow-clone
+check_and_fetch_commit() {
+  COMMIT_SHA="$1"
+  LABEL="$2"
+
+  if git cat-file -e "${COMMIT_SHA}^{commit}" 2>/dev/null; then
+    return 0
+  fi
+
+  if ! git fetch origin "$COMMIT_SHA" >/dev/null 2>&1; then
+    echo "::error::Fetching ${LABEL} commit '${COMMIT_SHA}' from remote 'origin' failed."
+    exit 1
+  fi
+}
+
+check_and_fetch_commit "$BASE_SHA" "base"
+check_and_fetch_commit "$HEAD_SHA" "head"
 
 NEW_FILES=$(git diff --name-only --diff-filter=A "$BASE_SHA" "$HEAD_SHA")
 
