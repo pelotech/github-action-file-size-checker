@@ -1,4 +1,4 @@
-# github-action-filesize-checker
+# github-action-file-size-checker
 github action to check file sizes that are committed to the repo
 
 
