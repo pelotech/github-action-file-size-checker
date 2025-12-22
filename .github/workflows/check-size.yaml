@@ -1,0 +1,25 @@
+name: Check File Sizes
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  check-size:
+    runs-on: ubuntu-latest
+    name: Check for large files
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Check for files over 20KB
+        id: file-check
+        uses: ./
+        with:
+          max_file_size_kb: '20'
+

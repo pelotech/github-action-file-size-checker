@@ -1,0 +1,44 @@
+name: File Size Checker
+description: Checks the file size of new files to ensure we limit large file changes to the repository
+
+inputs:
+  max_file_size_kb:
+    description: 'Maximum allowed file size for new files in Kilobytes (KB)'
+    required: true
+    default: '20' # Defaulting to 20KB for backward compatibility
+  base_sha:
+    description: 'Base commit SHA to compare against for new files'
+    required: true
+    default: ${{ github.event.pull_request.base.sha }}
+  head_sha:
+    description: 'Head commit SHA to compare against for new files'
+    required: true
+    default: ${{ github.event.pull_request.head.sha }}
+# TODO: implement these options
+#  fail_on_large_files:
+#    description: "Whether to fail the action when large files are found"
+#    required: false
+#    default: "false"
+#  exclude_patterns:
+#    description: "Comma-separated list of file patterns to exclude (e.g., '*.log,*.tmp')"
+#    required: false
+#    default: ""
+#  include_patterns:
+#    description: "Comma-separated list of file patterns to include (e.g., '*.zip,*.tar.gz')"
+#    required: false
+#    default: ""
+#  check_all_commits:
+#    description: 'Whether to check all commits between base and head'
+#    required: false
+#    default: 'false'
+
+outputs:
+  violations_list:
+    description: "List of files that exceeded the maximum size limit"
+    value: ${{ steps.size_check.outputs.violations_list }}
+
+runs:
+  using: 'composite'
+  steps:
+    - shell: sh
+      run: ./file_size_checker.sh
