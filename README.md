@@ -30,7 +30,7 @@ jobs:
 
 | Name | Required | Default | Description |
 | --- | --- | --- | --- |
-| `max_file_size_kib` | Yes | `20` | Maximum filesize, in kilobytes, that any newly added file may have. |
+| `max_file_size_kib` | Yes | `20` | Maximum filesize, in kibibytes, that any newly added file may have. |
 | `base_sha` | Yes | `${{ github.event.pull_request.base.sha }}` | Commit SHA used as the lower bound of the diff. Override this if you need to compare against a custom baseline (for example, on push workflows). |
 | `head_sha` | Yes | `${{ github.event.pull_request.head.sha }}` | Commit SHA used as the upper bound of the diff. Override when running outside of a pull request. |
 
