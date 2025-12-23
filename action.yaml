@@ -47,8 +47,3 @@ runs:
         BASE_SHA: ${{ inputs.base_sha }}
         HEAD_SHA: ${{ inputs.head_sha }}
       run: ./file_size_checker.sh
-    - shell: sh
-      run: |
-        echo "max_file_size_kib: ${{ inputs.max_file_size_kib }}"
-        echo "base_sha: ${{ inputs.base_sha }}"
-        echo "head_sha: ${{ inputs.head_sha }}"
