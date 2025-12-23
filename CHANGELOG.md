@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.3](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.2...v0.1.3) (2025-12-23)
+
+
+### Docs
+
+* use release please to update latest version in docs ([06bb2a6](https://github.com/pelotech/github-action-file-size-checker/commit/06bb2a68c59da73324e3ee3e50fa89c105c4927c))
+
 ## [0.1.2](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.1...v0.1.2) (2025-12-23)
 
 
