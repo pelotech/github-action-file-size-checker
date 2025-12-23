@@ -50,4 +50,4 @@ runs:
         max_file_size_kib: ${{ inputs.max_file_size_kib }}
         BASE_SHA: ${{ inputs.base_sha }}
         HEAD_SHA: ${{ inputs.head_sha }}
-      run: ./file_size_checker.sh
+      run: ${GITHUB_ACTION_PATH}/file_size_checker.sh
