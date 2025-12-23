@@ -5,7 +5,9 @@
   "tag-separator": "/",
   "release-type": "simple",
   "packages": {
-    ".": {}
+    ".": {
+      "extra-files": ["README.md"]
+    }
     },
   "changelog-sections": [
     {

@@ -3,7 +3,7 @@
 File Size Checker ensures every newly added file in a pull request stays below a size threshold that you define. Drop it into any workflow to keep oversized binaries or assets from entering your repository.
 
 ## Quick Start
-
+<!-- x-release-please-start-version -->
 ```yaml
 name: Check File Sizes
 
@@ -21,11 +21,11 @@ jobs:
 
       - name: Fail if new files are committed over 25KiB
         id: size_check
-        uses: pelotech/github-action-file-size-checker@main
+        uses: pelotech/github-action-file-size-checker@v0.1.2
         with:
           max_file_size_kib: '25'
 ```
-note: make sure to use latest released version or pin to a sha
+<!-- x-release-please-end -->
 
 ## Inputs
 
