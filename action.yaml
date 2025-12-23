@@ -1,6 +1,10 @@
 name: File Size Checker
 description: Checks the file size of new files to ensure we limit large file changes to the repository
 
+branding:
+  icon: 'file'
+  color: 'red'
+
 inputs:
   max_file_size_kib:
     description: 'Maximum allowed file size for new files in Kibibytes (KiB)'
