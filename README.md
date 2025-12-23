@@ -21,10 +21,11 @@ jobs:
 
       - name: Fail if new files are committed over 25KiB
         id: size_check
-        uses: pelotech/github-action-file-size-checker@v0.1
+        uses: pelotech/github-action-file-size-checker@main
         with:
           max_file_size_kib: '25'
 ```
+note: make sure to use latest released version or pin to a sha
 
 ## Inputs
 
