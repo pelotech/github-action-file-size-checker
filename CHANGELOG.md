@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.1](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.0...v0.1.1) (2025-12-23)
+
+
+### Bug Fixes
+
+* update readme location and branding ([018e3de](https://github.com/pelotech/github-action-file-size-checker/commit/018e3de0c437549105ed9d4be7b4b061d5f60408))
+
+
+### Chores
+
+* only run check-size on PR ([d4c7c04](https://github.com/pelotech/github-action-file-size-checker/commit/d4c7c04278896fd2f1fb6f3ec90a5961146cbcc2))
+
 ## [0.1.0](https://github.com/pelotech/github-action-file-size-checker/compare/v0.0.1...v0.1.0) (2025-12-23)
 
 
