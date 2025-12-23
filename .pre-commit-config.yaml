@@ -15,6 +15,7 @@ repos:
       - id: check-yaml
       - id: detect-private-key
       - id: detect-aws-credentials
+        args: [--allow-missing-credentials]
       - id: check-executables-have-shebangs
       - id: end-of-file-fixer
       - id: trailing-whitespace
