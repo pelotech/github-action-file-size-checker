@@ -1,0 +1,74 @@
+name: Integration Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-with-files-under-limit:
+    runs-on: ubuntu-slim
+    name: Validate action passes when files stay below the limit
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup test branch, commit file under limit
+        run: test/setup-test-branch.sh integration-tests/file-under-limit
+
+      - name: Commit fixture under size limit
+        run: test/commit-file-with-size-kib.sh integration-fixtures/10kib-file.bin 10 "Add small 10KiB integration test file"
+
+      - name: Run check-size action (expect success)
+        id: check_under_limit
+        uses: ./
+        with:
+          max_file_size_kib: '20'
+          base_sha: ${{ env.BASE_SHA }}
+          head_sha: ${{ env.HEAD_SHA }}
+
+      - name: Assert success outcome
+        env:
+          STEP_OUTCOME: ${{ steps.check_under_limit.outcome }}
+        run: |
+          if [ "$STEP_OUTCOME" != "success" ]; then
+            echo "::error::Expected the check-size action to succeed with only small files."
+            exit 1
+          fi
+
+  test-with-file-over-limit:
+    runs-on: ubuntu-slim
+    name: Validate action fails when a file exceeds the limit
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Setup test branch, commit file over limit
+        run: test/setup-test-branch.sh integration-tests/file-over-limit
+
+      - name: Commit fixture above size limit
+        run: test/commit-file-with-size-kib.sh integration-fixtures/40-kib-file.bin 40 "Add 40KiB integration test file"
+
+      - name: Run check-size action (expect failure)
+        id: check_over_limit
+        continue-on-error: true
+        uses: ./
+        with:
+          max_file_size_kib: '25'
+          base_sha: ${{ env.BASE_SHA }}
+          head_sha: ${{ env.HEAD_SHA }}
+
+      - name: Assert failure outcome
+        env:
+          STEP_OUTCOME: ${{ steps.check_over_limit.outcome }}
+        run: |
+          if [ "$STEP_OUTCOME" != "failure" ]; then
+            echo "::error::Expected the check-size action to fail when a large file is present."
+            exit 1
+          fi
