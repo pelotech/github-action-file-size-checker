@@ -1,9 +1,6 @@
 name: Check File Sizes
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main
