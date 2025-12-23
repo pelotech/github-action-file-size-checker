@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.2](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.1...v0.1.2) (2025-12-23)
+
+
+### Bug Fixes
+
+* add missing action path ([#7](https://github.com/pelotech/github-action-file-size-checker/issues/7)) ([014f750](https://github.com/pelotech/github-action-file-size-checker/commit/014f7504b6c88717dcd5b9975cd710121eaaf4cc))
+
+
+### Docs
+
+* update docs to point to latest version ([4d7048b](https://github.com/pelotech/github-action-file-size-checker/commit/4d7048b674551d215b150d3fcd5a646b7131b557))
+
 ## [0.1.1](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.0...v0.1.1) (2025-12-23)
 
 
