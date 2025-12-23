@@ -2,7 +2,7 @@
 set -eu
 
 # Get inputs (with defaults for local testing)
-MAX_FILE_SIZE_KB="${MAX_FILE_SIZE_KB:-20}"
+MAX_FILE_SIZE_KIB="${MAX_FILE_SIZE_KIB:-20}"
 BASE_SHA="${BASE_SHA:-}"
 HEAD_SHA="${HEAD_SHA:-}"
 #FAIL_ON_LARGE_FILES="${FAIL_ON_LARGE_FILES:-false}"
@@ -27,13 +27,13 @@ if [ -z "$BASE_SHA" ]; then
   fi
 fi
 
-if ! [ "$MAX_FILE_SIZE_KB" -gt 0 ] 2>/dev/null; then
-  echo "::error::Invalid max-file-size-kb value: '$MAX_FILE_SIZE_KB'. Must be a positive number."
+if ! [ "$MAX_FILE_SIZE_KIB" -gt 0 ] 2>/dev/null; then
+  echo "::error::Invalid max_file_size_kib value: '$MAX_FILE_SIZE_KIB'. Must be a positive number."
   exit 1
 fi
 
-MAX_SIZE_BYTES=$((MAX_FILE_SIZE_KB * 1024))
-MAX_SIZE_HUMAN="${MAX_FILE_SIZE_KB}KB"
+MAX_SIZE_BYTES=$((MAX_FILE_SIZE_KIB * 1024))
+MAX_SIZE_HUMAN="${MAX_FILE_SIZE_KIB}KiB"
 
 # Export the readable label for the GH comment
 echo "max_size_human=${MAX_SIZE_HUMAN}" >> "$GITHUB_OUTPUT"
@@ -83,10 +83,10 @@ else
     echo "--- NEW FILE:$file SIZE: $FILE_SIZE ---"
     if [ "$FILE_SIZE" -gt "$MAX_SIZE_BYTES" ]; then
       # Calculate human-readable sizes for error output
-      FILE_SIZE_KB=$((FILE_SIZE / 1024))
+      FILE_SIZE_KIB=$((FILE_SIZE / 1024))
 
       # Format the violation for the GitHub comment
-      VIOLATION_LINE="- **\`$file\`**: **${FILE_SIZE_KB} KB** (Max allowed: ${MAX_SIZE_HUMAN})"
+      VIOLATION_LINE="- **\`$file\`**: **${FILE_SIZE_KIB} KiB** (Max allowed: ${MAX_SIZE_HUMAN})"
 
       echo "::error file=$file::File size check failed: $file is too large."
       echo "$VIOLATION_LINE"

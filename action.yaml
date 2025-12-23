@@ -2,10 +2,10 @@ name: File Size Checker
 description: Checks the file size of new files to ensure we limit large file changes to the repository
 
 inputs:
-  max_file_size_kb:
-    description: 'Maximum allowed file size for new files in Kilobytes (KB)'
+  max_file_size_kib:
+    description: 'Maximum allowed file size for new files in Kibibytes (KiB)'
     required: true
-    default: '20' # Defaulting to 20KB for backward compatibility
+    default: '20'
   base_sha:
     description: 'Base commit SHA to compare against for new files'
     required: true
@@ -43,12 +43,12 @@ runs:
     - id: size_check
       shell: sh
       env:
-        MAX_FILE_SIZE_KB: ${{ inputs.max_file_size_kb }}
+        max_file_size_kib: ${{ inputs.max_file_size_kib }}
         BASE_SHA: ${{ inputs.base_sha }}
         HEAD_SHA: ${{ inputs.head_sha }}
       run: ./file_size_checker.sh
     - shell: sh
       run: |
-        echo "max_file_size_kb: ${{ inputs.max_file_size_kb }}"
+        echo "max_file_size_kib: ${{ inputs.max_file_size_kib }}"
         echo "base_sha: ${{ inputs.base_sha }}"
         echo "head_sha: ${{ inputs.head_sha }}"
