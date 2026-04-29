@@ -5,8 +5,8 @@ set -eu
 MAX_FILE_SIZE_KIB="${MAX_FILE_SIZE_KIB:-20}"
 BASE_SHA="${BASE_SHA:-}"
 HEAD_SHA="${HEAD_SHA:-}"
+EXCLUDE_PATTERNS="${EXCLUDE_PATTERNS:-}"
 #FAIL_ON_LARGE_FILES="${FAIL_ON_LARGE_FILES:-false}"
-#EXCLUDE_PATTERNS="${EXCLUDE_PATTERNS:-}"
 #INCLUDE_PATTERNS="${INCLUDE_PATTERNS:-}"
 #CHECK_ALL_COMMITS="${CHECK_ALL_COMMITS:-}"
 
@@ -34,6 +34,21 @@ fi
 
 MAX_SIZE_BYTES=$((MAX_FILE_SIZE_KIB * 1024))
 MAX_SIZE_HUMAN="${MAX_FILE_SIZE_KIB}KiB"
+
+is_excluded() {
+  _file="$1"
+  [ -z "$EXCLUDE_PATTERNS" ] && return 1
+  _excluded=0
+  while IFS= read -r _pattern; do
+    [ -z "$_pattern" ] && continue
+    case "$_file" in
+      $_pattern) _excluded=1; break ;;
+    esac
+  done << HEREDOC
+$EXCLUDE_PATTERNS
+HEREDOC
+  return "$_excluded"
+}
 
 # Export the readable label for the GH comment
 echo "max_size_human=${MAX_SIZE_HUMAN}" >> "$GITHUB_OUTPUT"
@@ -70,6 +85,11 @@ if [ -z "$NEW_FILES" ]; then
   echo "No new files detected in this PR. Check vacuously passes."
 else
   for file in $NEW_FILES; do
+    if is_excluded "$file"; then
+      echo "  - Excluded: $file"
+      continue
+    fi
+
     if [ ! -f "$file" ]; then
       echo "::warning file=$file::File not found in workspace. Skipping size check for: $file"
       continue

@@ -18,15 +18,15 @@ inputs:
     description: 'Head commit SHA to compare against for new files'
     required: true
     default: ${{ github.event.pull_request.head.sha }}
+  exclude_patterns:
+    description: "Newline-separated list of file patterns to exclude (e.g., '*.log' or 'dist/*')"
+    required: false
+    default: ""
 # TODO: implement these options
 #  fail_on_large_files:
 #    description: "Whether to fail the action when large files are found"
 #    required: false
 #    default: "false"
-#  exclude_patterns:
-#    description: "Comma-separated list of file patterns to exclude (e.g., '*.log,*.tmp')"
-#    required: false
-#    default: ""
 #  include_patterns:
 #    description: "Comma-separated list of file patterns to include (e.g., '*.zip,*.tar.gz')"
 #    required: false
@@ -50,4 +50,5 @@ runs:
         max_file_size_kib: ${{ inputs.max_file_size_kib }}
         BASE_SHA: ${{ inputs.base_sha }}
         HEAD_SHA: ${{ inputs.head_sha }}
+        EXCLUDE_PATTERNS: ${{ inputs.exclude_patterns }}
       run: ${GITHUB_ACTION_PATH}/file_size_checker.sh

@@ -34,6 +34,7 @@ jobs:
 | `max_file_size_kib` | Yes | `20` | Maximum filesize, in kilobytes, that any newly added file may have. |
 | `base_sha` | Yes | `${{ github.event.pull_request.base.sha }}` | Commit SHA used as the lower bound of the diff. Override this if you need to compare against a custom baseline (for example, on push workflows). |
 | `head_sha` | Yes | `${{ github.event.pull_request.head.sha }}` | Commit SHA used as the upper bound of the diff. Override when running outside of a pull request. |
+| `exclude_patterns` | No | `''` | Newline-separated list of file patterns to exclude from size checks (e.g. `*.log` or `dist/*`). Patterns use shell glob syntax. |
 
 > **Tip:** When the workflow runs inside a pull request, you can omit `base_sha` and `head_sha` because the defaults resolve automatically.
 
