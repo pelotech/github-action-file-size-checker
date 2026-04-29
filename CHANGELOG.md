@@ -1,5 +1,27 @@
 # Changelog
 
+## [0.2.0](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.2...v0.2.0) (2026-04-29)
+
+
+### Features
+
+* add `exclude_patterns` input to skip files from size checks ([#13](https://github.com/pelotech/github-action-file-size-checker/issues/13)) ([ee97f00](https://github.com/pelotech/github-action-file-size-checker/commit/ee97f00ba2c5743dcf884abd5e152a1ce953aaab))
+
+
+### Bug Fixes
+
+* use expected upper-case format for MAX_FILE_SIZE_KIB env var ([#10](https://github.com/pelotech/github-action-file-size-checker/issues/10)) ([d0ba39c](https://github.com/pelotech/github-action-file-size-checker/commit/d0ba39cd3ec4cddfc0747831d590ccc9b4665c20))
+
+
+### Chores
+
+* **deps:** update actions/create-github-app-token action to v3 ([#12](https://github.com/pelotech/github-action-file-size-checker/issues/12)) ([4e2d6a2](https://github.com/pelotech/github-action-file-size-checker/commit/4e2d6a28a6ca9de9a53a0102fda63596824a8324))
+
+
+### Docs
+
+* use release please to update latest version in docs ([06bb2a6](https://github.com/pelotech/github-action-file-size-checker/commit/06bb2a68c59da73324e3ee3e50fa89c105c4927c))
+
 ## [0.1.2](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.1...v0.1.2) (2025-12-23)
 
 
