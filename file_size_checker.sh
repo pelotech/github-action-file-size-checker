@@ -38,16 +38,15 @@ MAX_SIZE_HUMAN="${MAX_FILE_SIZE_KIB}KiB"
 is_excluded() {
   _file="$1"
   [ -z "$EXCLUDE_PATTERNS" ] && return 1
-  _excluded=0
   while IFS= read -r _pattern; do
     [ -z "$_pattern" ] && continue
     case "$_file" in
-      $_pattern) _excluded=1; break ;;
+      $_pattern) return 0 ;;
     esac
   done << HEREDOC
 $EXCLUDE_PATTERNS
 HEREDOC
-  return "$_excluded"
+  return 1
 }
 
 # Export the readable label for the GH comment
@@ -95,7 +94,7 @@ else
       continue
     fi
 
-    FILE_SIZE=$(stat -c %s "$file" 2>/dev/null) || {
+    FILE_SIZE=$(wc -c < "$file" 2>/dev/null) || {
       echo "::warning file=$file::Unable to get file size (stat failed). Skipping: $file"
       continue
     }
