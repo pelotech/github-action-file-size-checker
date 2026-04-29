@@ -47,7 +47,7 @@ runs:
     - id: size_check
       shell: sh
       env:
-        max_file_size_kib: ${{ inputs.max_file_size_kib }}
+        MAX_FILE_SIZE_KIB: ${{ inputs.max_file_size_kib }}
         BASE_SHA: ${{ inputs.base_sha }}
         HEAD_SHA: ${{ inputs.head_sha }}
         EXCLUDE_PATTERNS: ${{ inputs.exclude_patterns }}
