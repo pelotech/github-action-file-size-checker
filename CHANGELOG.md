@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.1](https://github.com/pelotech/github-action-file-size-checker/compare/v0.2.0...v0.2.1) (2026-04-29)
+
+
+### Bug Fixes
+
+* correct `is_excluded` return semantics and use portable file size ([#14](https://github.com/pelotech/github-action-file-size-checker/issues/14)) ([5f83e85](https://github.com/pelotech/github-action-file-size-checker/commit/5f83e85031564d7216f680c4d80ba068ea9860aa))
+
 ## [0.2.0](https://github.com/pelotech/github-action-file-size-checker/compare/v0.1.2...v0.2.0) (2026-04-29)
 
 
